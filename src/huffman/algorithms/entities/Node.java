@@ -2,7 +2,7 @@ package huffman.algorithms.entities;
 
 import java.util.Map;
 
-public class Node {
+public class Node implements Comparable<Node>{
 	
 	private char symbol;
 	private int timesRepeated;
@@ -75,5 +75,16 @@ public class Node {
 	
     public boolean isLeaf() {
         return leftNode == null && rightNode == null;
+    }
+
+	@Override
+	public int compareTo(Node o) {
+		return getFrequency() - o.getFrequency();
+	}
+	
+	public int getFrequency() {
+        if (isLeaf())
+            return timesRepeated;
+        return leftNode.getFrequency() + rightNode.getFrequency();
     }
 }
