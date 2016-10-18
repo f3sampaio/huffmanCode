@@ -1,5 +1,7 @@
 package huffman.algorithms.entities;
 
+import java.util.Map;
+
 public class Node {
 	
 	private char symbol;
@@ -15,6 +17,13 @@ public class Node {
 	// Constructor with symbol parameter
 	public Node(char symbol){
 		this.symbol = symbol;
+	}
+	
+	// Constructor with left and right nodes, used to create parents
+	public Node(Node left, Node right){
+		this.symbol = '+';
+		this.leftNode = left;
+		this.rightNode = right;
 	}
 
 	public char getSymbol() {
@@ -54,6 +63,17 @@ public class Node {
 		
 	}
 	
+    public void fillCodeMap(Map<Character, String> codemap, String work) {
+        if (isLeaf()) {
+            codemap.put(getSymbol(), work);
+            return;
+        }
+
+        leftNode.fillCodeMap(codemap, work + "0");
+        rightNode.fillCodeMap(codemap, work + "1");
+    }
 	
-	
+    public boolean isLeaf() {
+        return leftNode == null && rightNode == null;
+    }
 }

@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 
 import huffman.algorithms.entities.Node;
 
-public class HuffmanAlgorithm {
+public abstract class HuffmanAlgorithm {
 	
 	/**
 	 * This method counts the number of times a character present in the array occurres
@@ -14,7 +14,7 @@ public class HuffmanAlgorithm {
 	 * @param letters: Array of chars
 	 * @return A priority Queue containing the nodes in ascending order of frequency.
 	 */
-	public PriorityQueue<Node> countFrequencies(char[] arrayOfSymbols){
+	public static PriorityQueue<Node> countFrequencies(char[] arrayOfSymbols){
 		Map<Character, Node> count = new HashMap<>();
 		
 		// Each symbol is put into hashmap if isnt already into it
@@ -30,5 +30,35 @@ public class HuffmanAlgorithm {
 		return new PriorityQueue<>(count.values());
 		
 	}
+	
+	/**
+	 * This method creates the huffman tree grouping the first two elements into a parent
+	 * while the priority queue isnt empty
+	 * @param nodes Nodes into a priorityQueue
+	 * @return Huffman tree
+	 */
+	public static Node mountHuffmanTree(PriorityQueue<Node> nodes) {
+		Node firstNode = null;
+		Node secondNode = null;;
+		Node parent = null;
+		
+		while(!nodes.isEmpty()){
+			
+			// Group the two lowest frequent nodes
+			firstNode = nodes.poll();
+			secondNode = nodes.poll();
+			parent = new Node(firstNode, secondNode);
+			
+			if(!nodes.isEmpty()){
+				nodes.add(parent);
+			} else {
+				// Do nothing
+			}
+		}
+		
+		
+		return parent;
+	}
+
 	
 }
